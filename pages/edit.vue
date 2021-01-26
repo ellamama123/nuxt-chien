@@ -1,6 +1,6 @@
 <template lang="">
 <div>
-    <h1>Add Blog</h1>
+    <h1>Edit Blog</h1>  
     <blog-create-edit></blog-create-edit>
 </div>
     
