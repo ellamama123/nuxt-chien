@@ -1,0 +1,25 @@
+img {
+    height: 100px;
+}
+
+h2 {
+    line-height: 99px;
+}
+
+.menu {
+    margin-top: 37px;
+}
+
+.container {
+    width: 900px;
+}
+
+li.nav-item {
+    border: 1px solid black;
+    text-align: center;
+    /* color: black; */
+}
+
+a.nav-link {
+    color: black;
+}
