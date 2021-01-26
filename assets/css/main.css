@@ -1,9 +1,11 @@
 img {
-    height: 100px;
+    height: 55px;
 }
 
 h2 {
-    line-height: 99px;
+    line-height: 55px;
+    font-size: 32px;
+    font-weight: 500;
 }
 
 .menu {
@@ -22,4 +24,23 @@ li.nav-item {
 
 a.nav-link {
     color: black;
+}
+
+.form-group.button {
+    text-align: center;
+}
+
+form.search {
+    padding: 17px;
+    text-align: center;
+}
+
+button.btn.btn-success.search {
+    margin-top: 18px;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 13px;
 }
