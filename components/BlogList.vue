@@ -1,5 +1,5 @@
 <template lang="">
-                    
+                   
         <table class="table table-hover table-bordered">
             <thead class="thin-border-bottom">
                 <tr>
@@ -13,8 +13,9 @@
                     <th>Delete</th>     
                 </tr>
             </thead>
+            
             <tbody v-if="blogs && blogs.length">
-                <tr v-for="blog of blogs">
+                <tr v-for="(blog,index) of blogs" v-bind:key="blog.id" v-bind:title="blog.title">
                     <td>{{blog.id}}</td>
                     <td>{{blog.title}}</td>
                     <td v-if="blog.category == 0">Thời sự</td>
@@ -36,7 +37,7 @@
                         
                     </td>
                     <td>{{blog.data_pubblic}}</td>
-                    <td><a href="/edit" title="">Edit</dit></a></td>
+                    <td><button type="button" class="btn btn-primary"><a v-bind:href="'/edit/'+ blog.id" title="">Edit</a></button></td>
                     <td><button type="button" class="btn btn-danger" v-on:click="fireDelete(blog.id, index)">Delete</button></td>
                 </tr>
             </tbody>
@@ -45,40 +46,18 @@
 </template>
 
 <script>
+
 import axios from "axios";
 export default {
-    data: () => ({
-        blogs: [],
-    }),
-    created() {
-        this.list();
-    },
-    methods: {
-        fireDelete(id, index) {          
-            axios.delete('http://localhost:4000/blogs/'+id).then(response => this.organisations.splice(index, 1));
-            this.blogs.splice(index, 1);
-        },
-        list(search='')
-        {
-            const url = search ? 'http://localhost:4000/blogs?title_like=' + search : 'http://localhost:4000/blogs';
-                axios.get(url)
-                .then(response => {
-                this.blogs = response.data
-            })
-        },
-        search(search) {
-            this.list(search)
-        },
-    },
-    computed:
-    {
-        filteredCustomers () {
-        return this.blogs.filter((blog) => {
-            return blog.title.toLowerCase().includes(this.search.toLowerCase())
-        })
-        }
+    props:['blogs'],
+    methods: {       
+        fireDelete(id, index) {      
+            console.log(index),
+            axios.delete('http://localhost:4000/blogs/'+id).then((res) => {
+                this.blogs.splice(index, 1);
+            })    
+        },    
     }
-
 }
 
 </script>

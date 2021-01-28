@@ -13,61 +13,36 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <button class="btn btn-success search" @click="searchPost" >Search</button>
+                    <button class="btn btn-success search" @click="search1(search)" >Search</button>
                 </div>
             </div>
-        <blog-list ref="list"></blog-list>
+        <blog-list :blogs="blogs"></blog-list>
     </div>
     
 </template>
 <script>
 import BlogList from '@/components/BlogList.vue'
-
+import axios from 'axios'
 export default {
   components: { BlogList },
   data () {
       return {
           search : '',
+          blogs:[]
       }  
   },
-  methods : {
-      searchPost(){
-          console.log(this.$refs)
-          this.$refs.list.search(this.search);
-      }
-  }
+  mounted() {
+    this.search1(this.search)
+  },
+  methods: {
+    search1: function(search = '') {
+      const url = search ? 'http://localhost:4000/blogs?title_like=' + search : 'http://localhost:4000/blogs';
+                axios.get(url)
+                .then(response => {
+                this.blogs = response.data
+            })
+    }
+  },
 
 }
 </script>
-=======
-<template lang="">
-    
-    <div class="form-control">
-        <h1>Search Blog</h1>
-        <form action="" class="search">
-            <div class="row">
-                <div class="col-md-3">
-                    <p>Tiêu đề</p>
-                </div>
-                <div class="col-md-9">
-                    <input type="text" name="title" class="form-control" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <button class="btn btn-success search">Search</button>
-                </div>
-            </div>
-        </form> 
-        <blog-list></blog-list>
-    </div>
-    
-</template>
-<script>
-import BlogList from '@/components/BlogList.vue'
-
-export default {
-  components: { BlogList },
-}
-</script>
->>>>>>> 33e7b797ceac16c8946dc91f18278965c7402b7b

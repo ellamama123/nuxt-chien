@@ -12,4 +12,3 @@ import BlogCreateEdit from '@/components/BlogCreateEdit.vue'
 export default {
   components: { BlogCreateEdit },}
 </script>
-
