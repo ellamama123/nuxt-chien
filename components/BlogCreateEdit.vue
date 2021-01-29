@@ -54,19 +54,21 @@
                             </ul>
                         </p>
                         <div class="form-group button">
-                            <button type="button" class="btn btn-success" v-if="this.$route.name =='add'" @click="submit">Submit</button>
+                            <button type="button" class="btn btn-success" v-if="this.$route.name =='add'" @click="submit"><a href="/">Submit</a></button>
                              <button type="button" class="btn btn-success" v-else @click="update">Submit</button>
                             <button type="button" class="btn btn-primary">Clear</button>
                         </div>
     </div>
 </template>
 <script>
+import { DATA_CATE } from '@/store/const.js'
+import { DATA_POS } from '@/store/const.js'
 import axios from "axios";
 export default {
     data(){
         return {
-            cate : ["Thời sự","Thể thao","Văn hóa","Nghệ thuật"],
-            pos  : ["Việt Nam","Châu Âu","Châu Á","Châu Mỹ"],
+            DATA_CATE: DATA_CATE,
+            DATA_POS: DATA_POS,
             form: {
                 'id': '',
                 'title' : '',
@@ -81,10 +83,18 @@ export default {
             errors : [],
         }
     },
-    created() {
+    mounted() {
         console.log(this.cate)
         if(this.$route.name != 'add')
             this.list()
+    },
+    computed: {
+        dataCate: function () {
+        return this.DATA_CATE
+        },
+        dataPos: function () {
+        return this.DATA_POS
+        }
     },
     methods: {
         submit(){
@@ -99,13 +109,13 @@ export default {
             if(this.errors.length > 0) return false
             axios.post('http://localhost:4000/blogs/', this.form)
             .then(function( response ){});  
+            this.$router.push({ path: '/' })
 
         },
 
         list(){
             axios.get('http://localhost:4000/blogs/' + this.$route.params.id) .then((result) => {
             this.form = result.data; 
-            console.log(this.form);
             })
             
         },
@@ -123,6 +133,7 @@ export default {
             axios.put('http://localhost:4000/blogs/' + this.$route.params.id, this.form)
             .then(function( response ){
                 }.bind(this));
+            this.$router.push({ path: '/' })
         }
         },
 }
