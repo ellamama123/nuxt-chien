@@ -19,18 +19,36 @@
 
                         <div class="form-group">
                             <p class="mr-sm-2" for="inlineFormCustomSelect">Loại</p>
-                            <select class="custom-select mr-sm-2" v-model="form.category">
-                                <option v-for="(categ,index) in cate" v-bind:key="categ" :value=" index"> {{ categ }} </option>
+                            <select class="custom-select mr-sm-2" v-if="this.$route.name =='add'" v-model="form.category">
+                                <option v-for="(categ,index) in DATA_CATE" v-bind:key="categ" :value=" index" > {{ categ }} </option>
                             </select>
+                            <select class="custom-select mr-sm-2" v-else v-model="form.category">
+                                <option v-for="(categ,index) in DATA_CATE" v-bind:key="categ" :value=" index" > {{ categ }} </option>
+                            </select>
+
                         </div>
                         <div class="form-group">
                             <p>Vị trí</p>
                             <ul class="list-group list-group-flush">
-                                <li v-for="(post,index) in pos" v-bind:key="post"  class="list-group-control">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" name="vietnam" :value="index-1" class="custom-control-input" :id="index+'a'" v-model="form.position">
-                                        <label class="custom-control-label" :for="index+'a'">{{ post }}</label>
-                                    </div>
+                                <li
+                                v-for="(pos, index) in DATA_POS"
+                                v-bind:key="pos"
+                                class="list-group-control"
+                                >
+                                <div class="custom-control custom-checkbox">
+                                    <input
+                                    type="checkbox"
+                                    class="custom-control-input"
+                                    :id="index + 'custom'"
+                                    :value="index"
+                                    name="vietnam"
+                                    v-model="form.position"
+                                    >
+                                    <label
+                                    class="custom-control-label"
+                                    :for="index + 'custom'"
+                                    >{{ pos }}</label>
+                                </div>
                                 </li>
                             </ul>
                         </div>
@@ -54,8 +72,8 @@
                             </ul>
                         </p>
                         <div class="form-group button">
-                            <button type="button" class="btn btn-success" v-if="this.$route.name =='add'" @click="submit"><a href="/">Submit</a></button>
-                             <button type="button" class="btn btn-success" v-else @click="update">Submit</button>
+                            <button type="button" class="btn btn-success" v-if="this.$route.name =='blog-add'" @click="submit"><a href="/blog">Add</a></button>
+                             <button type="button" class="btn btn-success" v-else @click="update">Update</button>
                             <button type="button" class="btn btn-primary">Clear</button>
                         </div>
     </div>
@@ -70,22 +88,22 @@ export default {
             DATA_CATE: DATA_CATE,
             DATA_POS: DATA_POS,
             form: {
-                'id': '',
                 'title' : '',
                 'des' : '',
                 'detail' : '',
-                'category' : '',
                 'public' : '',
                 'data_pubblic' : '',
-                'position' : [],
                 'thumbs':''
             },
             errors : [],
         }
     },
+    created() {
+        console.log(this.$route.name)
+    }
+    ,
     mounted() {
-        console.log(this.cate)
-        if(this.$route.name != 'add')
+        if(this.$route.name != 'blog-add')
             this.list()
     },
     computed: {
@@ -102,19 +120,19 @@ export default {
             if(!this.form.title) this.errors.push("Tiêu đề trống")
             if(!this.form.des) this.errors.push("Mô tả trống")
             if(!this.form.detail) this.errors.push("Chi tiết trông trống")
-            if(!this.form.category) this.errors.push("Danh mục trống")
             if(!this.form.data_pubblic) this.errors.push("Ngày trống")
             if(!this.form.position) this.errors.push("Vị trí trống")
             if(!this.form.thumbs) this.errors.push("Ảnh trống")
             if(this.errors.length > 0) return false
-            axios.post('http://localhost:4000/blogs/', this.form)
+            axios.post('http://127.0.0.1:8000/api/blog', this.form)
             .then(function( response ){});  
+            console.log(this.form);
             this.$router.push({ path: '/' })
 
         },
 
         list(){
-            axios.get('http://localhost:4000/blogs/' + this.$route.params.id) .then((result) => {
+            axios.get('http://127.0.0.1:8000/api/blog/' + this.$route.params.id) .then((result) => {
             this.form = result.data; 
             })
             
@@ -125,12 +143,11 @@ export default {
             if(!this.form.title) this.errors.push("Tiêu đề trống")
             if(!this.form.des) this.errors.push("Mô tả trống")
             if(!this.form.detail) this.errors.push("Chi tiết trông trống")
-            if(!this.form.category) this.errors.push("Danh mục trống")
             if(!this.form.data_pubblic) this.errors.push("Ngày trống")
             if(!this.form.position) this.errors.push("Vị trí trống")
             if(!this.form.thumbs) this.errors.push("Ảnh tin trống")
             if(this.errors.length > 0) return false
-            axios.put('http://localhost:4000/blogs/' + this.$route.params.id, this.form)
+            axios.put('http://127.0.0.1:8000/api/blog/' + this.$route.params.id, this.form)
             .then(function( response ){
                 }.bind(this));
             this.$router.push({ path: '/' })

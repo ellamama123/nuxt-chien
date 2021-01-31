@@ -1,16 +1,16 @@
 <template lang="">
     <ul class="nav flex-column">
         <li class="nav-item">
-            <a class="nav-link active" href="/">List</a>
+            <a class="nav-link active" href="/blog">List</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/add">New</a>
+            <a class="nav-link" href="/blog/add">New</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/search">Search</a>
+            <a class="nav-link" href="/blog/search">Search</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/edit">Edit</a>
+            <a class="nav-link" href="/blog/edit">Edit</a>
         </li>
     </ul>  
 </template>

@@ -45,7 +45,7 @@
                         </ul>
                     </td>
                     <td>{{blog.data_pubblic}}</td>
-                    <td><button type="button" class="btn btn-primary"><a v-bind:href="'/'+ blog.id" title="">Edit</a></button></td>
+                    <td><button type="button" class="btn btn-primary"><a v-bind:href="'/blog/'+ blog.id" title="">Edit</a></button></td>
                     <td><button type="button" class="btn btn-danger" v-on:click="fireDelete(blog.id, index)">Delete</button></td>
                 </tr>
             </tbody>
@@ -77,7 +77,7 @@ export default {
     methods: {       
         fireDelete(id, index) {      
             if(confirm("Bạn có chắc chắn muốn xóa không ?")){
-            axios.delete('http://localhost:4000/blogs/'+id).then((res) => {
+            axios.delete('http://127.0.0.1:8000/api/blog/'+id).then((res) => {
                 this.blogs.splice(index, 1);
             }) 
             }   
