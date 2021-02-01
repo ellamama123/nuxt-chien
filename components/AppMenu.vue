@@ -1,21 +1,17 @@
 <template lang="">
     <ul class="nav flex-column">
         <li class="nav-item">
-            <a class="nav-link active" href="/blog">List</a>
+            <NuxtLink to="/blog">List</NuxtLink>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/blog/add">New</a>
+            <NuxtLink to="/blog/add">New</NuxtLink>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/blog/search">Search</a>
+            <NuxtLink to="/blog/search">Search</NuxtLink>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/blog/edit">Edit</a>
+            <NuxtLink to="/blog/edit">Edit</NuxtLink>
         </li>
     </ul>  
 </template>
 <script>
-export default {
-    
-}
-</script>

@@ -30,19 +30,7 @@
                     <td v-if="blog.public == true ">Yes</td>
                     <td v-if="blog.public == false ">No</td>
                     <td>
-                        <ul>
-                        <div
-                            v-for="(posit) of blog.position"
-                            v-bind:key="posit"
-                        >
-                            <li
-                            v-for="(pos, index) in dataPos"
-                            :key="index"
-                            >
-                            <p v-if="index + 1 == posit">{{pos}}</p>
-                            </li>
-                        </div>
-                        </ul>
+                            <p>{{parseJSONIfJSON(blog.position)}}</p>
                     </td>
                     <td>{{blog.data_pubblic}}</td>
                     <td><button type="button" class="btn btn-primary"><a v-bind:href="'/blog/'+ blog.id" title="">Edit</a></button></td>
@@ -54,15 +42,15 @@
 </template>
 
 <script>
-import { DATA_CATE } from '@/store/const.js'
-import { DATA_POS } from '@/store/const.js'
+import { DATA_CATE } from '@/const/const.js'
+import { DATA_POS } from '@/const/const.js'
 import axios from "axios";
 export default {
     props:['blogs'],
     data() {
         return {
-        DATA_CATE: DATA_CATE,
-        DATA_POS: DATA_POS,
+        DATA_CATE,
+        DATA_POS,
         }
     },
     computed: {
@@ -81,7 +69,16 @@ export default {
                 this.blogs.splice(index, 1);
             }) 
             }   
-        },    
+        },
+
+        parseJSONIfJSON(posit) {
+            try {
+                const posArr = JSON.parse(posit)
+                return posArr.join(', ')
+            } catch (error) {
+                return ""
+            }
+        }
     }
 }
 
