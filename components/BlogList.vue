@@ -18,15 +18,7 @@
                 <tr v-for="(blog,index) of blogs" v-bind:key="blog.id" v-bind:title="blog.title">
                     <td>{{blog.id}}</td>
                     <td>{{blog.title}}</td>
-                    <td>
-                        <div
-                        v-for="(cate, index) in dataCate"
-                        :key="index"
-                        >
-                        <p v-if="index == blog.category">{{cate}}</p>
-
-                        </div>
-                    </td>
+                    <td>{{findCategory(blog.category)}}</td>
                     <td v-if="blog.public == true ">Yes</td>
                     <td v-if="blog.public == false ">No</td>
                     <td>
@@ -42,8 +34,8 @@
 </template>
 
 <script>
-import { DATA_CATE } from '@/const/const.js'
-import { DATA_POS } from '@/const/const.js'
+import { DATA_CATE } from '@/const/const'
+import { DATA_POS } from '@/const/const'
 import axios from "axios";
 export default {
     props:['blogs'],
@@ -53,14 +45,7 @@ export default {
         DATA_POS,
         }
     },
-    computed: {
-        dataCate: function () {
-        return this.DATA_CATE
-        },
-
-        dataPos: function () {
-        return this.DATA_POS
-        }
+    computed:{
     },
     methods: {       
         fireDelete(id, index) {      
@@ -78,6 +63,10 @@ export default {
             } catch (error) {
                 return ""
             }
+        },
+        findCategory(id) {
+            const category = DATA_CATE.find(element => element === id)
+            return category ? category : ''
         }
     }
 }

@@ -63,7 +63,7 @@
                         <p v-if="errors.length">
                             <b>Lỗi:</b>
                             <ul>
-                            <li v-for="error in errors" v-bind:key="error"><p class="alert alert-warning">{{ error }}</p></li>
+                            <li v-for="error in errors" :key="error"><p class="alert alert-warning">{{ error }}</p></li>
                             </ul>
                         </p>
                         <div class="form-group button">
@@ -104,12 +104,10 @@ export default {
         submit(){
             const base_url = 'http://127.0.0.1:8000/api/blog/';
             this.errors = []
-            if(!this.form.title) this.errors.push("Tiêu đề trống")
-            if(!this.form.des) this.errors.push("Mô tả trống")
-            if(!this.form.detail) this.errors.push("Chi tiết trông trống")
-            if(!this.form.data_pubblic) this.errors.push("Ngày trống")
-            if(!this.form.position) this.errors.push("Vị trí trống")
-            if(!this.form.thumbs) this.errors.push("Ảnh trống")
+            for(const [key,value] of Object.entries(this.form))
+            {
+                if(!value) this.errors.push("Yêu cầu nhập đầy đủ")
+            }
             if(this.errors.length > 0) return false
             if(this.$route.name !== 'blog-add')
             {
